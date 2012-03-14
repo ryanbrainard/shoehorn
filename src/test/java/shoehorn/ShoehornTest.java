@@ -39,7 +39,28 @@ public class ShoehornTest {
     }
 
     @Test
-    public void testShoehorn() throws Exception {
+    public void testShoehorn_UnmappedKey() throws Exception {
+        createShoehornFixture().shoehorn();
+
+        assertEquals("Unmapped key should not be shoe horned", null, System.getProperty("ORIGINAL_KEY_A"));
+    }
+
+    @Test
+    public void testShoehorn_BareKey() throws Exception {
+        createShoehornFixture().shoehorn();
+
+        assertEquals("Bare key should be shoe horned as is", "ORIGINAL_VALUE_B", System.getProperty("ORIGINAL_KEY_B"));
+    }
+
+    @Test
+    public void testShoehorn_MappedKey() throws Exception {
+        createShoehornFixture().shoehorn();
+
+        assertEquals("Mapped key should be shoe horned to new key", "ORIGINAL_VALUE_C", System.getProperty("NEW_KEY_C"));
+        assertEquals("Mapped key should be shoe horned to new key", null, System.getProperty("ORIGINAL_KEY_C"));
+    }
+
+    private static Shoehorn createShoehornFixture() {
         final Map<String, String> feet = ImmutableMap.of("ORIGINAL_KEY_A", "ORIGINAL_VALUE_A",
                 "ORIGINAL_KEY_B", "ORIGINAL_VALUE_B",
                 "ORIGINAL_KEY_C", "ORIGINAL_VALUE_C");
@@ -47,13 +68,6 @@ public class ShoehornTest {
         final Map<String, String> mappings = ImmutableMap.of("ORIGINAL_KEY_B", "",
                 "ORIGINAL_KEY_C", "NEW_KEY_C");
 
-        final Shoehorn shoehorn = new Shoehorn(feet, mappings);
-
-        shoehorn.shoehorn();
-
-        assertEquals("Unmapped key should not be shoe horned", null, System.getProperty("ORIGINAL_KEY_A"));
-        assertEquals("Bare key should be shoe horned as is", "ORIGINAL_VALUE_B", System.getProperty("ORIGINAL_KEY_B"));
-        assertEquals("Mapped key should be shoe horned to new key", "ORIGINAL_VALUE_C", System.getProperty("NEW_KEY_C"));
-        assertEquals("Mapped key should be shoe horned to new key", null, System.getProperty("ORIGINAL_KEY_C"));
+        return new Shoehorn(feet, mappings);
     }
 }
