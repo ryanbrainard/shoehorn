@@ -17,6 +17,7 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava-collections</artifactId>
             <version>r03</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

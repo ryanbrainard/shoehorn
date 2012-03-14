@@ -1,8 +1,7 @@
 package shoehorn;
 
-import com.google.common.collect.Maps;
-
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -42,13 +41,13 @@ public class Shoehorn {
     }
 
     static Map<String, String> getMappings(String mapFilePath) {
-        final Properties mappings = new Properties();
+        final Properties mappingsAsProps = new Properties();
         final File mapFile = new File(mapFilePath);
 
         InputStream mapFileStream = null;
         try {
             mapFileStream = new FileInputStream(mapFile);
-            mappings.load(mapFileStream);
+            mappingsAsProps.load(mapFileStream);
             System.out.println("Loaded shoehorn mappings: " + mapFilePath);
         } catch (FileNotFoundException e) {
             System.err.println("Could not find shoehorn mappings: " + mapFilePath);
@@ -64,6 +63,11 @@ public class Shoehorn {
             }
         }
 
-        return Maps.fromProperties(mappings);
+        final Map<String, String> mappings = new HashMap<String, String>();
+        for (Map.Entry<Object, Object> prop : mappingsAsProps.entrySet()) {
+            mappings.put(prop.getKey().toString(), prop.getValue().toString());
+        }
+
+        return mappings;
     }
 }
