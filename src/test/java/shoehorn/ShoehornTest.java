@@ -57,16 +57,32 @@ public class ShoehornTest {
         createShoehornFixture().shoehorn();
 
         assertEquals("Mapped key should be shoe horned to new key", "ORIGINAL_VALUE_C", System.getProperty("NEW_KEY_C"));
-        assertEquals("Mapped key should be shoe horned to new key", null, System.getProperty("ORIGINAL_KEY_C"));
+        assertEquals("Mapped key should not be shoe horned to original key", null, System.getProperty("ORIGINAL_KEY_C"));
+    }
+
+    @Test
+    public void testShoehorn_MultiMappedKey() throws Exception {
+        createShoehornFixture().shoehorn();
+
+        final String msg = "MultiMapped key should be shoe horned to all new keys";
+        assertEquals(msg, "ORIGINAL_VALUE_D", System.getProperty("NEW_KEY_D1"));
+        assertEquals(msg, "ORIGINAL_VALUE_D", System.getProperty("NEW_KEY_D2"));
+        assertEquals("MultiMapped key should not be shoe horned to original key", null, System.getProperty("ORIGINAL_KEY_D"));
     }
 
     private static Shoehorn createShoehornFixture() {
-        final Map<String, String> feet = ImmutableMap.of("ORIGINAL_KEY_A", "ORIGINAL_VALUE_A",
+        final Map<String, String> feet = ImmutableMap.of(
+                "ORIGINAL_KEY_A", "ORIGINAL_VALUE_A",
                 "ORIGINAL_KEY_B", "ORIGINAL_VALUE_B",
-                "ORIGINAL_KEY_C", "ORIGINAL_VALUE_C");
+                "ORIGINAL_KEY_C", "ORIGINAL_VALUE_C",
+                "ORIGINAL_KEY_D", "ORIGINAL_VALUE_D"
+        );
 
-        final Map<String, String> mappings = ImmutableMap.of("ORIGINAL_KEY_B", "",
-                "ORIGINAL_KEY_C", "NEW_KEY_C");
+        final Map<String, String> mappings = ImmutableMap.of(
+                "ORIGINAL_KEY_B", "",
+                "ORIGINAL_KEY_C", "NEW_KEY_C",
+                "ORIGINAL_KEY_D", "NEW_KEY_D1 NEW_KEY_D2"
+        );
 
         return new Shoehorn(feet, mappings);
     }

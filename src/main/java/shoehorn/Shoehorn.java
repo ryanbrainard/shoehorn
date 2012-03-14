@@ -25,15 +25,17 @@ public class Shoehorn {
                 continue;
             }
 
-            final String shoeKey;
+            final String[] shoeKeys;
             if (mappings.get(foot.getKey()).trim().equals("")) {
-                shoeKey = foot.getKey();
+                shoeKeys = new String[]{foot.getKey()};
             } else {
-                shoeKey = mappings.get(foot.getKey());
+                shoeKeys = mappings.get(foot.getKey()).split(" ");
             }
 
-            System.setProperty(shoeKey, foot.getValue());
-            System.out.println("Shoehorned [" + foot.getKey() + "] into [" + shoeKey + "]");
+            for (String shoeKey : shoeKeys) {
+                System.setProperty(shoeKey, foot.getValue());
+                System.out.println("Shoehorned [" + foot.getKey() + "] into [" + shoeKey + "]");
+            }
         }
     }
 
