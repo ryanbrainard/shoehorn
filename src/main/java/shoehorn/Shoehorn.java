@@ -10,6 +10,7 @@ import java.util.Properties;
  */
 public class Shoehorn {
 
+    public static final String DEFAULT_MAP_FILE_PATH = "shoehorn.map";
     private final Map<String, String> feet;
     private final Map<String, String> mappings;
 
@@ -37,7 +38,8 @@ public class Shoehorn {
     }
 
     public static void premain(String agentArgs) {
-        new Shoehorn(System.getenv(), getMappings("shoehorn.map")).shoehorn();
+        final String mapFilePath = agentArgs != null ? agentArgs : DEFAULT_MAP_FILE_PATH;
+        new Shoehorn(System.getenv(), getMappings(mapFilePath)).shoehorn();
     }
 
     static Map<String, String> getMappings(String mapFilePath) {
