@@ -11,22 +11,29 @@ import java.util.Properties;
  */
 public class Shoehorn {
 
-    private final Map<String, String> foot;
+    private final Map<String, String> feet;
     private final Map<String, String> mappings;
 
-    public Shoehorn(Map<String, String> foot, Map<String, String> mappings) {
-        this.foot = foot;
+    public Shoehorn(Map<String, String> feet, Map<String, String> mappings) {
+        this.feet = feet;
         this.mappings = mappings;
     }
 
     void shoehorn() {
-        for (Map.Entry<String, String> envVar : foot.entrySet()) {
-            if (!mappings.containsKey(envVar.getKey())) {
+        for (Map.Entry<String, String> foot : feet.entrySet()) {
+            if (!mappings.containsKey(foot.getKey())) {
                 continue;
             }
 
-            System.setProperty(envVar.getKey(), envVar.getValue());
-            System.out.println("Loaded shoehorn mapping: " + envVar.getKey());
+            final String shoeKey;
+            if (mappings.get(foot.getKey()).trim().equals("")) {
+                shoeKey = foot.getKey();
+            } else {
+                shoeKey = mappings.get(foot.getKey());
+            }
+
+            System.setProperty(shoeKey, foot.getValue());
+            System.out.println("Shoehorned [" + foot.getKey() + "] into [" + shoeKey + "]");
         }
     }
 
