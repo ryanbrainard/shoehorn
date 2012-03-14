@@ -1,5 +1,7 @@
 package shoehorn;
 
+import com.google.common.collect.Maps;
+
 import java.io.*;
 import java.util.Map;
 import java.util.Properties;
@@ -10,9 +12,9 @@ import java.util.Properties;
 public class Shoehorn {
 
     private final Map<String, String> foot;
-    private final Properties mappings;
+    private final Map<String, String> mappings;
 
-    public Shoehorn(Map<String, String> foot, Properties mappings) {
+    public Shoehorn(Map<String, String> foot, Map<String, String> mappings) {
         this.foot = foot;
         this.mappings = mappings;
     }
@@ -28,7 +30,7 @@ public class Shoehorn {
         new Shoehorn(System.getenv(), getMappings("shoehorn.map")).shoehorn();
     }
 
-    static Properties getMappings(String mapFilePath) {
+    static Map<String, String> getMappings(String mapFilePath) {
         final Properties mappings = new Properties();
         final File mapFile = new File(mapFilePath);
 
@@ -51,6 +53,6 @@ public class Shoehorn {
             }
         }
 
-        return mappings;
+        return Maps.fromProperties(mappings);
     }
 }
