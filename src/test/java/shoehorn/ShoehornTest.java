@@ -39,14 +39,16 @@ public class ShoehornTest {
     }
 
     @Test
-    public void testShoehorn() throws Exception {
-        final Map<String, String> foot = ImmutableMap.of("ORIGINAL_KEY", "ORIGINAL_VALUE");
-        final Map<String, String> mappings = ImmutableMap.of("ORIGINAL_KEY", "NEW_KEY");
+    public void testFilteredShoehorn() throws Exception {
+        final Map<String, String> foot = ImmutableMap.of("ORIGINAL_KEY_A", "ORIGINAL_VALUE_A",
+                "ORIGINAL_KEY_B", "ORIGINAL_VALUE_B");
+
+        final Map<String, String> mappings = ImmutableMap.of("ORIGINAL_KEY_A", "NEW_KEY_A");
         final Shoehorn shoehorn = new Shoehorn(foot, mappings);
 
         shoehorn.shoehorn();
 
-        assertEquals("ORIGINAL_VALUE", System.getProperty("ORIGINAL_KEY"));
+        assertEquals("ORIGINAL_VALUE_A", System.getProperty("ORIGINAL_KEY_A"));
+        assertEquals(null, System.getProperty("ORIGINAL_KEY_B"));
     }
-
 }

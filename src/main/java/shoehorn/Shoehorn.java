@@ -21,6 +21,10 @@ public class Shoehorn {
 
     void shoehorn() {
         for (Map.Entry<String, String> envVar : foot.entrySet()) {
+            if (!mappings.containsKey(envVar.getKey())) {
+                continue;
+            }
+
             System.setProperty(envVar.getKey(), envVar.getValue());
             System.out.println("Loaded shoehorn mapping: " + envVar.getKey());
         }
