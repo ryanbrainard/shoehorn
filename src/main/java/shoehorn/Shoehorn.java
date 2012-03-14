@@ -9,22 +9,26 @@ import java.util.Properties;
  */
 public class Shoehorn {
 
-    public static void premain(String agentArgs) {
-        new Shoehorn().shoehorn();
+    private final Map<String, String> foot;
+    private final Properties mappings;
+
+    public Shoehorn(Map<String, String> foot, Properties mappings) {
+        this.foot = foot;
+        this.mappings = mappings;
     }
 
-    private void shoehorn() {
-        System.out.println("Registering Environment Variables as Java System Properties");
-
-        Properties mappings = getMappings("shoehorn.map");
-
-        for (Map.Entry<String, String> envVar : System.getenv().entrySet()) {
+    void shoehorn() {
+        for (Map.Entry<String, String> envVar : foot.entrySet()) {
             System.setProperty(envVar.getKey(), envVar.getValue());
             System.out.println("Loaded shoehorn mapping: " + envVar.getKey());
         }
     }
 
-    Properties getMappings(String mapFilePath) {
+    public static void premain(String agentArgs) {
+        new Shoehorn(System.getenv(), getMappings("shoehorn.map")).shoehorn();
+    }
+
+    static Properties getMappings(String mapFilePath) {
         final Properties mappings = new Properties();
         final File mapFile = new File(mapFilePath);
 

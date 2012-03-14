@@ -2,6 +2,8 @@ package shoehorn;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import static org.junit.Assert.*;
@@ -14,7 +16,7 @@ public class ShoehornTest {
     @Test
     public void testGetMappings() {
         final String mapFilePath = ClassLoader.getSystemResource("shoehorn.map.test").getPath();
-        final Properties mappings = new Shoehorn().getMappings(mapFilePath);
+        final Properties mappings = Shoehorn.getMappings(mapFilePath);
 
         assertTrue(mappings.containsKey("SOME_KEY"));
         assertEquals("SOME_VALUE", mappings.getProperty("SOME_KEY"));
@@ -32,8 +34,31 @@ public class ShoehornTest {
     @Test
     public void testGetMappings_BadFileName() {
         final String mapFilePath = "bad-file-name";
-        final Properties mappings = new Shoehorn().getMappings(mapFilePath);
+        final Properties mappings = Shoehorn.getMappings(mapFilePath);
 
         assertTrue(mappings.isEmpty());
+    }
+
+    @Test
+    public void testShoehorn() throws Exception {
+        Shoehorn shoehorn = createShoehorn("SOME_KEY", "SOME_VALUE");
+
+        shoehorn.shoehorn();
+    }
+
+    private Shoehorn createShoehorn(String key, String value) {
+        final HashMap<String, String> map = new HashMap<String, String>();
+        map.put(key, value);
+
+        return createShoehorn(map);
+    }
+
+    private Shoehorn createShoehorn(Map<String, String> map) {
+        final Properties mappings = new Properties();
+        for (Map.Entry<String, String> mapEntry : map.entrySet()) {
+            mappings.setProperty(mapEntry.getKey(), mapEntry.getValue());
+        }
+
+        return new Shoehorn(System.getenv(), mappings);
     }
 }
