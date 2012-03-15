@@ -39,12 +39,4 @@ public class MappingLoaderTest {
         assertFalse(mappings.containsKey("MISSING_KEY"));
         assertEquals(null, mappings.get("MISSING_KEY"));
     }
-
-    @Test
-    public void testGetMappings_BadFileName() {
-        final String mapFilePath = "bad-file-name";
-        final Map<String, String> mappings = MappingLoader.load(mapFilePath);
-
-        assertTrue(mappings.isEmpty());
-    }
 }

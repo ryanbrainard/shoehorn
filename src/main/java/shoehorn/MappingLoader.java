@@ -1,6 +1,8 @@
 package shoehorn;
 
-import java.io.*;
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,14 +11,14 @@ import java.util.Properties;
 /**
  * @author Ryan Brainard
  */
-class MappingLoader {
+abstract class MappingLoader {
 
     static Map<String, String> load(String mapArg) {
         final MappingLoader loader;
         if (new File(mapArg).exists()) {
-            loader = new MappingLoader();
+            loader = new FileMappingLoader();
         } else {
-            return Collections.emptyMap();
+            loader = new StringMappingLoader();
         }
 
         return loader.loadInternal(mapArg);
@@ -25,21 +27,16 @@ class MappingLoader {
     protected Map<String, String> loadInternal(String mapArg) {
         final Properties mappingsAsProps = new Properties();
 
-        final File mapFile = new File(mapArg);
-
-        InputStream mapFileStream = null;
+        Closeable input = null;
         try {
-            mapFileStream = new FileInputStream(mapFile);
-            mappingsAsProps.load(mapFileStream);
+            input = inject(mapArg, mappingsAsProps);
             System.out.println("Loaded shoehorn mappings: " + mapArg);
-        } catch (FileNotFoundException e) {
-            System.err.println("Could not find shoehorn mappings: " + mapArg);
         } catch (IOException e) {
-            System.err.println("Failed to load shoehorn mappings: " + mapArg);
+            System.err.println("Failed to load shoehorn mappings from: " + mapArg);
         } finally {
-            if (mapFileStream != null) {
+            if (input != null) {
                 try {
-                    mapFileStream.close();
+                    input.close();
                 } catch (IOException e) {
                     // ignore
                 }
@@ -53,4 +50,6 @@ class MappingLoader {
 
         return Collections.unmodifiableMap(mappings);
     }
+
+    protected abstract Closeable inject(String args, Properties into) throws IOException;
 }
