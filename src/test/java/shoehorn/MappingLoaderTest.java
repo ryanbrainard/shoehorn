@@ -13,6 +13,16 @@ import static org.junit.Assert.*;
 public class MappingLoaderTest {
 
     @Test
+    public void testGetMappings_Null() {
+        final Map<String, String> environment = ImmutableMap.of();
+        final String overrides = null;
+
+        final Map<String, String> mappings = new MappingLoader().load(environment, overrides);
+
+        assertTrue(mappings.isEmpty());
+    }
+
+    @Test
     public void testGetMappings_Empty() {
         final Map<String, String> environment = ImmutableMap.of();
         final String overrides = "";

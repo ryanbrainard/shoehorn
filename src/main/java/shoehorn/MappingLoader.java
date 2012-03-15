@@ -30,6 +30,10 @@ class MappingLoader {
     }
 
     private Map<String, String> loadOne(String mapArg) {
+        if (mapArg == null) {
+            return Collections.emptyMap();
+        }
+
         System.out.println("Loading shoehorn mappings with " + this.getClass().getSimpleName());
 
         final Properties mappingsAsProps = new Properties();
