@@ -25,13 +25,13 @@ Once the mapping file is place, just add `shoehorn.jar` as a Java Agent when lau
 
     java -javaagent:shoehorn.jar [rest of args for launching the app...]
 
-`shoehorn.jar` can be created independently or integated into the app's Maven build, as described below.
+`shoehorn.jar` can be created independently or integrated into the app's Maven build, as described below.
 
 ###Integrating with Maven
 
 If the app using Shoehorn is using Maven, add the following to the app's `pom.xml` to create the `shoehorn.jar` file.
 
-####Add the Repository
+####1. Add the Repository
 
     <repository>
         <id>github-ryanbrainard</id>
@@ -40,7 +40,7 @@ If the app using Shoehorn is using Maven, add the following to the app's `pom.xm
         <layout>default</layout>
     </repository>
 
-####Add the Dependency
+####2. Add the Dependency
 
     <dependency>
         <groupId>com.github.ryanbrainard</groupId>
@@ -50,7 +50,7 @@ If the app using Shoehorn is using Maven, add the following to the app's `pom.xm
     </dependency>
 
 
-####Add the Build Plugin
+####3. Add the Build Plugin
 
     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -73,6 +73,14 @@ If the app using Shoehorn is using Maven, add the following to the app's `pom.xm
             </execution>
         </executions>
     </plugin>
+
+####4. Point to the Shoehorn JAR
+
+Now when running `mvn package` on the app, the Shoehorn JAR will be copied to `target/dependency/shoehorn.jar`,
+so set the path in the `-javaagent` argument appropriately:
+
+    java -javaagent:target/dependency/shoehorn.jar  [rest of args for launching the app...]
+
 
 ###Hacking
 If you'd like to contribute to this project, fork it and send me a pull request with tests.
