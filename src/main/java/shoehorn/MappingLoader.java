@@ -25,6 +25,8 @@ abstract class MappingLoader {
     }
 
     protected Map<String, String> loadInternal(String mapArg) {
+        System.out.println("Loading shoehorn mappings with " + this.getClass().getSimpleName());
+
         final Properties mappingsAsProps = new Properties();
 
         Closeable input = null;
