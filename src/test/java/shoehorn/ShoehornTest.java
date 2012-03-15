@@ -5,38 +5,12 @@ import org.junit.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Ryan Brainard
  */
 public class ShoehornTest {
-
-    @Test
-    public void testGetMappings() {
-        final String mapFilePath = ClassLoader.getSystemResource("shoehorn.map.test").getPath();
-        final Map<String, String> mappings = Shoehorn.getMappings(mapFilePath);
-
-        assertTrue(mappings.containsKey("SOME_KEY"));
-        assertEquals("SOME_VALUE", mappings.get("SOME_KEY"));
-
-        assertTrue(mappings.containsKey("BARE_KEY"));
-        assertEquals("", mappings.get("BARE_KEY"));
-
-        assertTrue(mappings.containsKey("BARE_KEY_WITH_EQUALS"));
-        assertEquals("", mappings.get("BARE_KEY_WITH_EQUALS"));
-
-        assertFalse(mappings.containsKey("MISSING_KEY"));
-        assertEquals(null, mappings.get("MISSING_KEY"));
-    }
-
-    @Test
-    public void testGetMappings_BadFileName() {
-        final String mapFilePath = "bad-file-name";
-        final Map<String, String> mappings = Shoehorn.getMappings(mapFilePath);
-
-        assertTrue(mappings.isEmpty());
-    }
 
     @Test
     public void testShoehorn_UnmappedKey() throws Exception {
