@@ -1,6 +1,7 @@
 package shoehorn;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -72,6 +73,6 @@ public class Shoehorn {
             mappings.put(prop.getKey().toString(), prop.getValue().toString());
         }
 
-        return mappings;
+        return Collections.unmodifiableMap(mappings);
     }
 }
