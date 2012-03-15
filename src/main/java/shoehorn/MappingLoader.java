@@ -1,8 +1,8 @@
 package shoehorn;
 
-import java.io.Closeable;
-import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,27 +11,33 @@ import java.util.Properties;
 /**
  * @author Ryan Brainard
  */
-abstract class MappingLoader {
+class MappingLoader {
 
-    static Map<String, String> load(String mapArg) {
-        final MappingLoader loader;
-        if (new File(mapArg).exists()) {
-            loader = new FileMappingLoader();
-        } else {
-            loader = new StringMappingLoader();
+    public static final String SHOEHORN_MAP_ENV_VAR_PREFIX = "SHOEHORN_MAP";
+
+    public Map<String, String> load(Map<String, String> environment, String overrides) {
+        final Map<String, String> mappings = new HashMap<String, String>();
+
+        for (Map.Entry<String, String> env : environment.entrySet()) {
+            if (env.getKey().startsWith(SHOEHORN_MAP_ENV_VAR_PREFIX)) {
+                mappings.putAll(loadOne(env.getValue()));
+            }
         }
 
-        return loader.loadInternal(mapArg);
+        mappings.putAll(loadOne(overrides));
+
+        return Collections.unmodifiableMap(mappings);
     }
 
-    protected Map<String, String> loadInternal(String mapArg) {
+    private Map<String, String> loadOne(String mapArg) {
         System.out.println("Loading shoehorn mappings with " + this.getClass().getSimpleName());
 
         final Properties mappingsAsProps = new Properties();
 
-        Closeable input = null;
+        Reader input = null;
         try {
-            input = inject(mapArg, mappingsAsProps);
+            input = new StringReader(mapArg.replaceAll(";", "\n"));
+            mappingsAsProps.load(input);
             System.out.println("Loaded shoehorn mappings: " + mapArg);
         } catch (IOException e) {
             System.err.println("Failed to load shoehorn mappings from: " + mapArg);
@@ -50,8 +56,6 @@ abstract class MappingLoader {
             mappings.put(prop.getKey().toString(), prop.getValue().toString());
         }
 
-        return Collections.unmodifiableMap(mappings);
+        return mappings;
     }
-
-    protected abstract Closeable inject(String args, Properties into) throws IOException;
 }

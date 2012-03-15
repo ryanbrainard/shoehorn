@@ -7,7 +7,6 @@ import java.util.Map;
  */
 public class Shoehorn {
 
-    public static final String DEFAULT_MAP_FILE_PATH = "shoehorn.map";
     private final Map<String, String> feet;
     private final Map<String, String> mappings;
 
@@ -36,8 +35,8 @@ public class Shoehorn {
         }
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static void premain(String agentArgs) {
-        final String mapArg = agentArgs != null ? agentArgs : DEFAULT_MAP_FILE_PATH;
-        new Shoehorn(System.getenv(), MappingLoader.load(mapArg)).shoehorn();
+        new Shoehorn(System.getenv(), new MappingLoader().load(System.getenv(), agentArgs)).shoehorn();
     }
 }

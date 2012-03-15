@@ -1,5 +1,6 @@
 package shoehorn;
 
+import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 
 import java.util.Map;
@@ -12,16 +13,55 @@ import static org.junit.Assert.*;
 public class MappingLoaderTest {
 
     @Test
-    public void testGetMappings_FromFile() {
-        final String mapFilePath = ClassLoader.getSystemResource("shoehorn.map.test").getPath();
-        final Map<String, String> mappings = MappingLoader.load(mapFilePath);
+    public void testGetMappings_Empty() {
+        final Map<String, String> environment = ImmutableMap.of();
+        final String overrides = "";
+
+        final Map<String, String> mappings = new MappingLoader().load(environment, overrides);
+
+        assertTrue(mappings.isEmpty());
+    }
+
+    @Test
+    public void testGetMappings_FromEnvironment() {
+        final Map<String, String> environment = ImmutableMap.of(
+                MappingLoader.SHOEHORN_MAP_ENV_VAR_PREFIX, "SOME_KEY=SOME_VALUE;BARE_KEY;BARE_KEY_WITH_EQUALS=");
+        final String overrides = "";
+
+        final Map<String, String> mappings = new MappingLoader().load(environment, overrides);
+
+        assertMappings(mappings);
+    }
+
+    @Test
+    public void testGetMappings_FromEnvironment_Multi() {
+        final Map<String, String> environment = ImmutableMap.of(
+                MappingLoader.SHOEHORN_MAP_ENV_VAR_PREFIX + 1, "SOME_KEY=SOME_VALUE;BARE_KEY_WITH_EQUALS=",
+                MappingLoader.SHOEHORN_MAP_ENV_VAR_PREFIX + 2, "BARE_KEY");
+        final String overrides = "";
+
+        final Map<String, String> mappings = new MappingLoader().load(environment, overrides);
+
+        assertMappings(mappings);
+    }
+
+    @Test
+    public void testGetMappings_FromEnvironment_Overridden() {
+        final Map<String, String> environment = ImmutableMap.of(
+                MappingLoader.SHOEHORN_MAP_ENV_VAR_PREFIX, "SOME_KEY=SOME_VALUE_XXX;BARE_KEY;BARE_KEY_WITH_EQUALS=");
+        final String overrides = "SOME_KEY=SOME_VALUE";
+
+        final Map<String, String> mappings = new MappingLoader().load(environment, overrides);
 
         assertMappings(mappings);
     }
 
     @Test
     public void testGetMappings_FromArg() {
-        final Map<String, String> mappings = MappingLoader.load("SOME_KEY=SOME_VALUE;BARE_KEY;BARE_KEY_WITH_EQUALS=");
+        final Map<String, String> environment = ImmutableMap.of();
+        final String overrides = "SOME_KEY=SOME_VALUE;BARE_KEY;BARE_KEY_WITH_EQUALS=";
+
+        final Map<String, String> mappings = new MappingLoader().load(environment, overrides);
 
         assertMappings(mappings);
     }
