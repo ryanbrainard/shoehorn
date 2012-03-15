@@ -51,17 +51,7 @@ If the app using Shoehorn is using Maven, add the following to the app's `pom.xm
         <layout>default</layout>
     </repository>
 
-####2. Add the Dependency
-
-    <dependency>
-        <groupId>com.github.ryanbrainard</groupId>
-        <artifactId>shoehorn</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <scope>runtime</scope>
-    </dependency>
-
-
-####3. Add the Build Plugin
+####2. Add the Build Plugin
 
     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -85,7 +75,7 @@ If the app using Shoehorn is using Maven, add the following to the app's `pom.xm
         </executions>
     </plugin>
 
-####4. Point to the Shoehorn JAR
+####3. Point to the Shoehorn JAR
 
 Now when running `mvn package` on the app, the Shoehorn JAR will be copied to `target/dependency/shoehorn.jar`,
 so set the path in the `-javaagent` argument appropriately:
