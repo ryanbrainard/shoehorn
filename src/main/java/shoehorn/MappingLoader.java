@@ -20,29 +20,26 @@ class MappingLoader {
 
         for (Map.Entry<String, String> env : environment.entrySet()) {
             if (env.getKey().startsWith(SHOEHORN_MAP_ENV_VAR_PREFIX)) {
-                mappings.putAll(loadOne(env.getValue()));
+                loadOne(mappings, env.getValue());
             }
         }
 
         return Collections.unmodifiableMap(mappings);
     }
 
-    private Map<String, String> loadOne(String mapArg) {
-        if (mapArg == null) {
-            return Collections.emptyMap();
+    private void loadOne(Map<String, String> mappings, String mapping) {
+        if (mapping == null) {
+            return;
         }
-
-        System.out.println("Loading shoehorn mappings with " + this.getClass().getSimpleName());
 
         final Properties mappingsAsProps = new Properties();
 
         Reader input = null;
         try {
-            input = new StringReader(mapArg.replaceAll(";", "\n"));
+            input = new StringReader(mapping.replaceAll(";", "\n"));
             mappingsAsProps.load(input);
-            System.out.println("Loaded shoehorn mappings: " + mapArg);
         } catch (IOException e) {
-            System.err.println("Failed to load shoehorn mappings from: " + mapArg);
+            System.err.println("Failed to load shoehorn mapping from: " + mapping);
         } finally {
             if (input != null) {
                 try {
@@ -53,11 +50,8 @@ class MappingLoader {
             }
         }
 
-        final Map<String, String> mappings = new HashMap<String, String>();
         for (Map.Entry<Object, Object> prop : mappingsAsProps.entrySet()) {
             mappings.put(prop.getKey().toString(), prop.getValue().toString());
         }
-
-        return mappings;
     }
 }

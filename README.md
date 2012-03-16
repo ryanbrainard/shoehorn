@@ -66,7 +66,7 @@ If the app using Shoehorn is using Maven, add the following to the app's `pom.xm
                         <artifactItem>
                             <groupId>com.github.ryanbrainard</groupId>
                             <artifactId>shoehorn</artifactId>
-                            <version>1.0-SNAPSHOT</version>
+                            <version>1.2-SNAPSHOT</version>
                             <destFileName>shoehorn.jar</destFileName>
                         </artifactItem>
                     </artifactItems>
