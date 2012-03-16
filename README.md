@@ -2,8 +2,8 @@
 
 Shoehorn is a [Java Agent](http://docs.oracle.com/javase/6/docs/api/java/lang/instrument/package-summary.html)
 that maps OS environment variables to Java system properties. It is helpful for using with applications that only
-accept system properties for configuration when the values are set as environment variables. Of course you could
-use `-D` flags to accomplish the same thing, but that can quickly become unmanageable.
+accept system properties for configuration, but [the values are set as environment variables](http://www.12factor.net/config).
+Of course you could use `-D` flags to accomplish the same thing, but that can quickly become unmanageable.
 
 ##Adding Shoehorn to an App
 
