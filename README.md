@@ -46,7 +46,7 @@ If the app using Shoehorn is using Maven, add the following to the app's `pom.xm
 
     <repository>
         <id>github-ryanbrainard</id>
-        <name>ryanbrainard's personal repo on github</name>
+        <name>ryanbrainard's github repo</name>
         <url>https://raw.github.com/ryanbrainard/repo/master</url>
         <layout>default</layout>
     </repository>
