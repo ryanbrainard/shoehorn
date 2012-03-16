@@ -15,7 +15,7 @@ class MappingLoader {
 
     public static final String SHOEHORN_MAP_ENV_VAR_PREFIX = "SHOEHORN_MAP";
 
-    public Map<String, String> load(Map<String, String> environment, String overrides) {
+    public Map<String, String> load(Map<String, String> environment) {
         final Map<String, String> mappings = new HashMap<String, String>();
 
         for (Map.Entry<String, String> env : environment.entrySet()) {
@@ -23,8 +23,6 @@ class MappingLoader {
                 mappings.putAll(loadOne(env.getValue()));
             }
         }
-
-        mappings.putAll(loadOne(overrides));
 
         return Collections.unmodifiableMap(mappings);
     }

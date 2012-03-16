@@ -37,6 +37,6 @@ public class Shoehorn {
 
     @SuppressWarnings("UnusedDeclaration")
     public static void premain(String agentArgs) {
-        new Shoehorn(System.getenv(), new MappingLoader().load(System.getenv(), agentArgs)).shoehorn();
+        new Shoehorn(System.getenv(), new MappingLoader().load(System.getenv())).shoehorn();
     }
 }

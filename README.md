@@ -9,9 +9,9 @@ Of course you could use `-D` flags to accomplish the same thing, but that can qu
 
 ###Setup Mappings
 
-To use Shoehorn with an app, mappings need to be created from environment variables to system properties.
-These mappings are simply name-value pairs. If nothing is specified on the right-hand side of the equals
-sign, the environment variable will simply be mapped to a system property with the same name.
+To use Shoehorn with an app, key-value mappings need to be created from environment variables to system properties.
+If nothing is specified on the right-hand side of the equals sign (i.e. a bare key),
+the environment variable will simply be mapped to a system property with the same name.
 Additionally, the same environment variable can be mapped to multiple
 system properties by listing multiple new names delimited by spaces.
 
@@ -21,8 +21,8 @@ Example mappings:
     ENV_VAR_TO_MAP_TO_A_NEW_NAME=new.name.as.system.property
     ENV_VAR_TO_MAP_TO_MULTIPLE_NEW_NAMES=new.name.as.system.property another.name.as.system.property
 
-The mappings can provided to Shoehorn either as environment variables starting with `SHOEHORN_MAP`,
-as an argument to the agent, or both. Multiple mappings can be can be placed on the same line with `;` delimiters.
+The mappings are provided to Shoehorn as environment variables starting with `SHOEHORN_MAP`.
+Multiple mappings can be can be placed on the same line with `;` delimiters.
 For example, to set the mappings above as envronment variables:
 
     export SHOEHORN_MAP_MULTI="ENV_VAR_TO_MAP_AS_IS;ENV_VAR_TO_MAP_TO_A_NEW_NAME=new.name.as.system.property"
@@ -34,7 +34,7 @@ Notice how the mappings can all be lumped into one environment variable delimite
 
 Once the mappings are place, just add `shoehorn.jar` as a Java Agent when launching the app:
 
-    java -javaagent:shoehorn.jar[optional mappings] [rest of args for launching the app...]
+    java -javaagent:shoehorn.jar [rest of args for launching the app...]
 
 `shoehorn.jar` can be created independently or integrated into the app's Maven build, as described below.
 
@@ -80,7 +80,7 @@ If the app using Shoehorn is using Maven, add the following to the app's `pom.xm
 Now when running `mvn package` on the app, the Shoehorn JAR will be copied to `target/dependency/shoehorn.jar`,
 so set the path in the `-javaagent` argument appropriately:
 
-    java -javaagent:target/dependency/shoehorn.jar[optional mappings]  [rest of args for launching the app...]
+    java -javaagent:target/dependency/shoehorn.jar  [rest of args for launching the app...]
 
 
 ###Hacking
