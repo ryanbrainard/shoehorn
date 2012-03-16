@@ -7,6 +7,11 @@ import java.util.Map;
  */
 public class Shoehorn {
 
+    @SuppressWarnings("UnusedDeclaration")
+    public static void premain(String agentArgs) {
+        new Shoehorn(System.getenv(), new MappingLoader().load(System.getenv())).shoehorn();
+    }
+
     private final Map<String, String> feet;
     private final Map<String, String> mappings;
 
@@ -33,10 +38,5 @@ public class Shoehorn {
                 System.out.println("Shoehorned [" + foot.getKey() + "] into [" + shoeKey + "]");
             }
         }
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public static void premain(String agentArgs) {
-        new Shoehorn(System.getenv(), new MappingLoader().load(System.getenv())).shoehorn();
     }
 }
