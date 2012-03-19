@@ -3,12 +3,45 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.github.ryanbrainard</groupId>
     <artifactId>shoehorn</artifactId>
     <version>1.3-SNAPSHOT</version>
     <packaging>jar</packaging>
-
+    <name>Shoehorn</name>
+    <description>A Java Agent for mapping OS environment variables to Java system properties</description>
+    <url>https://github.com/ryanbrainard/shoehorn</url>
+    <developers>
+        <developer>
+            <id>ryanbrainard</id>
+            <name>Ryan Brainard</name>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://raw.github.com/ryanbrainard/shoehorn/master/LICENSE.md</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/ryanbrainard/shoehorn</url>
+        <connection>scm:git:git@github.com:ryanbrainard/shoehorn.git</connection>
+        <developerConnection>scm:git:git@github.com:ryanbrainard/shoehorn.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    <mailingLists>
+        <mailingList>
+            <name>Webapp runner issues</name>
+            <archive>https://github.com/ryanbrainard/shoehorn/issues?state=closed</archive>
+            <subscribe>https://github.com/ryanbrainard/shoehorn/toggle_watch</subscribe>
+            <unsubscribe>https://github.com/ryanbrainard/shoehorn/toggle_watch</unsubscribe>
+            <post>https://github.com/ryanbrainard/shoehorn/issues/new</post>
+        </mailingList>
+    </mailingLists>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/ryanbrainard/shoehorn/issues/new</url>
+    </issueManagement>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -23,7 +56,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -40,5 +72,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
