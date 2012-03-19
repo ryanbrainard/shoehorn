@@ -9,24 +9,17 @@ Of course you could use `-D` flags to accomplish the same thing, but that can qu
 
 ###Setup Mappings
 
-To use Shoehorn with an app, key-value mappings need to be created from environment variables to system properties.
-If nothing is specified on the right-hand side of the equals sign (i.e. a bare key),
-the environment variable will simply be mapped to a system property with the same name.
-Additionally, the same environment variable can be mapped to multiple
-system properties by listing multiple new names delimited by spaces.
+To use Shoehorn with an app, key-value mappings need to be created to assign environment variables to system properties.
+For example:
 
-Example mappings:
+    system.property.name=ENV_VAR_NAME
 
-    ENV_VAR_TO_MAP_AS_IS
-    ENV_VAR_TO_MAP_TO_A_NEW_NAME=new.name.as.system.property
-    ENV_VAR_TO_MAP_TO_MULTIPLE_NEW_NAMES=new.name.as.system.property another.name.as.system.property
-
-The mappings are provided to Shoehorn as environment variables starting with `SHOEHORN_MAP`.
+The mappings themselves are provided to Shoehorn as environment variables starting with `SHOEHORN_MAP`.
 Multiple mappings can be can be placed on the same line with `;` delimiters.
 For example, to set the mappings above as envronment variables:
 
-    export SHOEHORN_MAP_MULTI="ENV_VAR_TO_MAP_AS_IS;ENV_VAR_TO_MAP_TO_A_NEW_NAME=new.name.as.system.property"
-    export SHOEHORN_MAP_SINGLE="ENV_VAR_TO_MAP_TO_MULTIPLE_NEW_NAMES=new.name.as.system.property another.name.as.system.property"
+    export SHOEHORN_MAP_SINGLE="system.property.name=ENV_VAR_NAME"
+    export SHOEHORN_MAP_MULTI="system.property.name=ENV_VAR_NAME;another.system.property.name=ANOTHER_ENV_VAR_NAME"
 
 Notice how the mappings can all be lumped into one environment variable delimited by `;` or configured separated.
 
@@ -66,7 +59,7 @@ If the app using Shoehorn is using Maven, add the following to the app's `pom.xm
                         <artifactItem>
                             <groupId>com.github.ryanbrainard</groupId>
                             <artifactId>shoehorn</artifactId>
-                            <version>1.2-SNAPSHOT</version>
+                            <version>1.3-SNAPSHOT</version>
                             <destFileName>shoehorn.jar</destFileName>
                         </artifactItem>
                     </artifactItems>

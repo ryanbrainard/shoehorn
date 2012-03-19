@@ -21,22 +21,16 @@ public class Shoehorn {
     }
 
     void shoehorn() {
-        for (Map.Entry<String, String> env : environment.entrySet()) {
-            if (!mappings.containsKey(env.getKey())) {
+        for (Map.Entry<String, String> map : mappings.entrySet()) {
+            final String propName = map.getKey();
+            final String envName = map.getValue();
+
+            if (!environment.containsKey(envName)) {
                 continue;
             }
 
-            final String[] propertyKeys;
-            if (mappings.get(env.getKey()).trim().equals("")) {
-                propertyKeys = new String[]{env.getKey()};
-            } else {
-                propertyKeys = mappings.get(env.getKey()).split(" ");
-            }
-
-            for (String propertyKey : propertyKeys) {
-                System.setProperty(propertyKey, env.getValue());
-                System.out.println("Shoehorned [" + env.getKey() + "] into [" + propertyKey + "]");
-            }
+            System.setProperty(propName, environment.get(envName));
+            System.out.println("Shoehorned [" + envName + "] into [" + propName + "]");
         }
     }
 }
