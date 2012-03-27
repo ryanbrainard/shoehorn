@@ -35,7 +35,7 @@
     </scm>
     <mailingLists>
         <mailingList>
-            <name>Webapp runner issues</name>
+            <name>Shoehorn Issues</name>
             <archive>https://github.com/ryanbrainard/shoehorn/issues?state=closed</archive>
             <subscribe>https://github.com/ryanbrainard/shoehorn/toggle_watch</subscribe>
             <unsubscribe>https://github.com/ryanbrainard/shoehorn/toggle_watch</unsubscribe>
