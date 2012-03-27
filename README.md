@@ -35,16 +35,7 @@ Once the mappings are place, just add `shoehorn.jar` as a Java Agent when launch
 
 If the app using Shoehorn is using Maven, add the following to the app's `pom.xml` to create the `shoehorn.jar` file.
 
-####1. Add the Repository
-
-    <repository>
-        <id>github-ryanbrainard</id>
-        <name>ryanbrainard's github repo</name>
-        <url>https://raw.github.com/ryanbrainard/repo/master</url>
-        <layout>default</layout>
-    </repository>
-
-####2. Add the Build Plugin
+####1. Add the Build Plugin
 
     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -59,7 +50,7 @@ If the app using Shoehorn is using Maven, add the following to the app's `pom.xm
                         <artifactItem>
                             <groupId>com.github.ryanbrainard</groupId>
                             <artifactId>shoehorn</artifactId>
-                            <version>1.3-SNAPSHOT</version>
+                            <version>0.1</version>
                             <destFileName>shoehorn.jar</destFileName>
                         </artifactItem>
                     </artifactItems>
@@ -68,7 +59,7 @@ If the app using Shoehorn is using Maven, add the following to the app's `pom.xm
         </executions>
     </plugin>
 
-####3. Point to the Shoehorn JAR
+####2. Point to the Shoehorn JAR
 
 Now when running `mvn package` on the app, the Shoehorn JAR will be copied to `target/dependency/shoehorn.jar`,
 so set the path in the `-javaagent` argument appropriately:
