@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.github.ryanbrainard</groupId>
     <artifactId>shoehorn</artifactId>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Shoehorn</name>
     <description>A Java Agent for mapping OS environment variables to Java system properties</description>
