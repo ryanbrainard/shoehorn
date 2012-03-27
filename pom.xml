@@ -29,7 +29,7 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/ryanbrainard/shoehorn</url>
+        <url>http://github.com/ryanbrainard/shoehorn.git</url>
         <connection>scm:git:git@github.com:ryanbrainard/shoehorn.git</connection>
         <developerConnection>scm:git:git@github.com:ryanbrainard/shoehorn.git</developerConnection>
     </scm>
